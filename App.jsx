@@ -1,37 +1,18 @@
+
+import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
-import ItemGoal from "./components/ItemGoal";
-import InputGoal from "./components/InputGoal";
-import {
-  StyleSheet,
-  Text,
-  View,
-  TextInput,
-  Button,
-  FlatList,
-} from "react-native";
-// import ItemGoal from "./components/ItemGoal";
+import { StyleSheet, Text, View, TextInput, Button } from "react-native";
 
 export default function App() {
-  const [enteredGoal, setEnteredGoal] = useState("");
-  const [courseGoal, setCourseGoal] = useState([]);
+  const [entredGoal, setEntredGoal] = useState("");
   const goalInputHandler = (textentered) => {
-    setEnteredGoal(textentered);
-  };
-  const addGoalHandler = () => {
-    setCourseGoal((currentGoal) => [
-      ...courseGoal,
-      { id: Math.random().toString(), value:  enteredGoal  },
-    ]);
-  };
-  const removeGoalHandler = (goalid) => {
-    setCourseGoal(currentGoal=>{
-      return currentGoal.filter(goal=>goal.id !== goalid)
-    });
-    
+    setEntredGoal(textentered);
+
   };
   return (
     <View Stytle={styles.screen}>
       <View style={styles.inputContainer}>
+
        <InputGoal entered={enteredGoal}
        goalhandler={goalInputHandler}/>
         <Button onPress={addGoalHandler}  title="ADD" />
@@ -47,6 +28,13 @@ export default function App() {
           />
         )}
       />
+
+        <TextInput style={styles.TextInput}
+        value={entredGoal}
+        onChange={goalInputHandler} />
+        <Button style={styles.Button} title="ADD" />
+      </View>
+
     </View>
   );
 }
@@ -61,6 +49,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
 
+
   Littlegolas: {
     padding: 10,
     marginVertical: 10,
@@ -68,5 +57,13 @@ const styles = StyleSheet.create({
     borderColor: "#000",
     borderWidth: 1,
   },
-  
+
+=======
+  TextInput: {
+    padding: 20,
+    width: "80%",
+    borderBottomColor: "#ccc",
+    borderBottomWidth: 1,
+  },
+
 });
