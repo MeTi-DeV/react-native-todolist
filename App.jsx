@@ -1,3 +1,4 @@
+
 import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
 import { StyleSheet, Text, View, TextInput, Button } from "react-native";
@@ -6,15 +7,34 @@ export default function App() {
   const [entredGoal, setEntredGoal] = useState("");
   const goalInputHandler = (textentered) => {
     setEntredGoal(textentered);
+
   };
   return (
     <View Stytle={styles.screen}>
       <View style={styles.inputContainer}>
+
+       <InputGoal entered={enteredGoal}
+       goalhandler={goalInputHandler}/>
+        <Button onPress={addGoalHandler}  title="ADD" />
+      </View>
+      <FlatList
+        keyExtractor={(item, index) => item.id}
+        data={courseGoal}
+        renderItem={(itemData) => (
+          <ItemGoal
+            title={itemData.item.value}
+            onDelete={removeGoalHandler}
+            id={itemData.item.id}
+          />
+        )}
+      />
+
         <TextInput style={styles.TextInput}
         value={entredGoal}
         onChange={goalInputHandler} />
         <Button style={styles.Button} title="ADD" />
       </View>
+
     </View>
   );
 }
@@ -28,6 +48,8 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
   },
+
+
   Littlegolas: {
     padding: 10,
     marginVertical: 10,
@@ -35,10 +57,13 @@ const styles = StyleSheet.create({
     borderColor: "#000",
     borderWidth: 1,
   },
+
+=======
   TextInput: {
     padding: 20,
     width: "80%",
     borderBottomColor: "#ccc",
     borderBottomWidth: 1,
   },
+
 });
