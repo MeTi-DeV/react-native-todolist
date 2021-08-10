@@ -12,29 +12,30 @@ import {
 // import ItemGoal from "./components/ItemGoal";
 
 export default function App() {
-  const [enteredGoal, setEnteredGoal] = useState("");
   const [courseGoal, setCourseGoal] = useState([]);
-  const goalInputHandler = (textentered) => {
-    setEnteredGoal(textentered);
-  };
-  const addGoalHandler = () => {
+  const [isModalVisible, setIsModalVisble] = useState(false);
+  const addGoalHandler = (goalTitle) => {
     setCourseGoal((currentGoal) => [
       ...courseGoal,
-      { id: Math.random().toString(), value:  enteredGoal  },
+      { id: Math.random().toString(), value: goalTitle },
     ]);
+    setIsModalVisble(false)
   };
   const removeGoalHandler = (goalid) => {
-    setCourseGoal(currentGoal=>{
-      return currentGoal.filter(goal=>goal.id !== goalid)
+    setCourseGoal((currentGoal) => {
+      return currentGoal.filter((goal) => goal.id !== goalid);
     });
-    
   };
+
   return (
-    <View Stytle={styles.screen}>
-      <View style={styles.inputContainer}>
-       <InputGoal entered={enteredGoal}
-       goalhandler={goalInputHandler}/>
-        <Button onPress={addGoalHandler}  title="ADD" />
+    <View stytle={Styles.Screen}>
+      <View style={Styles.inputContainer}>
+        <Button
+          style={Styles.Moadalbutton}
+          title="ADD NEW GOAL"
+          onPress={() => setIsModalVisble(true)}
+        />
+        <InputGoal onAddGoal={addGoalHandler} visible={isModalVisible} />
       </View>
       <FlatList
         keyExtractor={(item, index) => item.id}
@@ -51,8 +52,8 @@ export default function App() {
   );
 }
 
-const styles = StyleSheet.create({
-  screen: {
+const Styles = StyleSheet.create({
+  Screen: {
     padding: 50,
   },
   inputContainer: {
@@ -68,5 +69,10 @@ const styles = StyleSheet.create({
     borderColor: "#000",
     borderWidth: 1,
   },
-  
+  Moadalbutton: {
+    width:100,
+    justifyContent: "center",
+    alignItems: "center",
+    flex: 1,
+  },
 });
