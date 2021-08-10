@@ -4,12 +4,36 @@ import React, { useState } from "react";
 import { StyleSheet, Text, View, TextInput, Button } from "react-native";
 
 export default function App() {
+
+  const [courseGoal, setCourseGoal] = useState([]);
+  const [isModalVisible, setIsModalVisble] = useState(false);
+  const addGoalHandler = (goalTitle) => {
+    setCourseGoal((currentGoal) => [
+      ...courseGoal,
+      { id: Math.random().toString(), value: goalTitle },
+    ]);
+    setIsModalVisble(false)
+  };
+  const removeGoalHandler = (goalid) => {
+    setCourseGoal((currentGoal) => {
+      return currentGoal.filter((goal) => goal.id !== goalid);
+    });
   const [entredGoal, setEntredGoal] = useState("");
   const goalInputHandler = (textentered) => {
     setEntredGoal(textentered);
 
+
   };
+
   return (
+    <View stytle={Styles.Screen}>
+      <View style={Styles.inputContainer}>
+        <Button
+          style={Styles.Moadalbutton}
+          title="ADD NEW GOAL"
+          onPress={() => setIsModalVisble(true)}
+        />
+        <InputGoal onAddGoal={addGoalHandler} visible={isModalVisible} />
     <View Stytle={styles.screen}>
       <View style={styles.inputContainer}>
 
@@ -39,8 +63,8 @@ export default function App() {
   );
 }
 
-const styles = StyleSheet.create({
-  screen: {
+const Styles = StyleSheet.create({
+  Screen: {
     padding: 50,
   },
   inputContainer: {
@@ -57,8 +81,14 @@ const styles = StyleSheet.create({
     borderColor: "#000",
     borderWidth: 1,
   },
+  Moadalbutton: {
+    width:100,
+    justifyContent: "center",
+    alignItems: "center",
+    flex: 1,
+  },
 
-=======
+
   TextInput: {
     padding: 20,
     width: "80%",
