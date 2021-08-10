@@ -1,17 +1,10 @@
+
+import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
-import ItemGoal from "./components/ItemGoal";
-import InputGoal from "./components/InputGoal";
-import {
-  StyleSheet,
-  Text,
-  View,
-  TextInput,
-  Button,
-  FlatList,
-} from "react-native";
-// import ItemGoal from "./components/ItemGoal";
+import { StyleSheet, Text, View, TextInput, Button } from "react-native";
 
 export default function App() {
+
   const [courseGoal, setCourseGoal] = useState([]);
   const [isModalVisible, setIsModalVisble] = useState(false);
   const addGoalHandler = (goalTitle) => {
@@ -25,6 +18,11 @@ export default function App() {
     setCourseGoal((currentGoal) => {
       return currentGoal.filter((goal) => goal.id !== goalid);
     });
+  const [entredGoal, setEntredGoal] = useState("");
+  const goalInputHandler = (textentered) => {
+    setEntredGoal(textentered);
+
+
   };
 
   return (
@@ -36,6 +34,12 @@ export default function App() {
           onPress={() => setIsModalVisble(true)}
         />
         <InputGoal onAddGoal={addGoalHandler} visible={isModalVisible} />
+    <View Stytle={styles.screen}>
+      <View style={styles.inputContainer}>
+
+       <InputGoal entered={enteredGoal}
+       goalhandler={goalInputHandler}/>
+        <Button onPress={addGoalHandler}  title="ADD" />
       </View>
       <FlatList
         keyExtractor={(item, index) => item.id}
@@ -48,6 +52,13 @@ export default function App() {
           />
         )}
       />
+
+        <TextInput style={styles.TextInput}
+        value={entredGoal}
+        onChange={goalInputHandler} />
+        <Button style={styles.Button} title="ADD" />
+      </View>
+
     </View>
   );
 }
@@ -62,6 +73,7 @@ const Styles = StyleSheet.create({
     alignItems: "center",
   },
 
+
   Littlegolas: {
     padding: 10,
     marginVertical: 10,
@@ -75,4 +87,13 @@ const Styles = StyleSheet.create({
     alignItems: "center",
     flex: 1,
   },
+
+
+  TextInput: {
+    padding: 20,
+    width: "80%",
+    borderBottomColor: "#ccc",
+    borderBottomWidth: 1,
+  },
+
 });
