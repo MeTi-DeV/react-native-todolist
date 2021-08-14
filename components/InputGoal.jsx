@@ -14,8 +14,18 @@ const InputGoal = (props) => {
   const goalInputHandler = (enteredTexT) => {
     setEnteredGoal(enteredTexT);
   };
+
+  const addGoalHandler=()=>{
+      props.onAddGoal(enteredGoal)
+      setEnteredGoal('');
+  }
+
+  return (
+    <Modal visible={props.onVisible} animationType="slide">
+
   return (
     <Modal visible={props.visible} animationType="slide">
+
       <View>
         <TextInput
           placeholder={"Enter Some Text"}
@@ -23,7 +33,15 @@ const InputGoal = (props) => {
           value={enteredGoal}
           style={styles.TextInput}
         />
+
+        <View style={styles.buttonContainer}>
+            <View style={styles.button}>
+        <Button style="button" title="ADD" onPress={addGoalHandler} /></View>
+        <View style={styles.button}>
+        <Button style="button" title="CAMCEL" color="red" onPress={props.onCancel} /></View></View>
+
         <Button title="ADD" onPress={props.onAddGoal.bind(this, enteredGoal)} />
+
       </View>
     </Modal>
   );
@@ -33,6 +51,28 @@ const styles = StyleSheet.create({
 padding:50
   },
   TextInput: {
+      justifyContent: 'center',
+      alignItems: 'center',
+    padding: 20,
+    width: "100%",
+    borderBottomColor: "#ccc",
+    borderBottomWidth: 1,
+  },
+buttonContainer: {
+    marginTop:40,
+      width :"100 %",
+      justifyContent:"space-around",
+      alignContent:'center',
+      flexDirection:"row"
+  },
+  button: {
+      width:"40%"
+  }
+
+});
+
+export default InputGoal;
+
     padding: 20,
     width: "80%",
     borderBottomColor: "#ccc",

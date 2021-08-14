@@ -1,4 +1,33 @@
 
+import { StatusBar } from 'expo-status-bar';
+import React ,{useState}from 'react';
+import { Button, StyleSheet, Text, View ,FlatList } from 'react-native';
+import InputGoal from "./components/InputGoal";
+import ItemGoal from"./components/ItemGoal";
+export default function App() {
+  const [courseGoal , setCourseGoal]=useState([]);
+  const[isOnVisible ,setIsOnVisible] = useState(false)
+  const addGoalHandler=(titleGoal)=>{
+setCourseGoal([
+    ...courseGoal ,{id: Math.random().toString() , value:titleGoal}
+  ])
+setIsOnVisible(false);
+  }
+   const goalRemoveHandler =(goalId)=>{
+ setCourseGoal(currentGoal=>{
+   return currentGoal.filter(goald=>goald.id !== goalId)
+ })
+}
+const aditialCancelGoal=()=>{
+  setIsOnVisible(false)
+}
+  return (
+    <View style={styles.Screen}>
+      <View style={styles.inputContainer}>
+      <Button title="ADD NEW GOAL" onPress={()=>setIsOnVisible(true)}/>
+      <InputGoal onVisible={isOnVisible} onAddGoal={addGoalHandler} onCancel={aditialCancelGoal}/>
+
+
 import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
 import { StyleSheet, Text, View, TextInput, Button } from "react-native";
@@ -40,6 +69,7 @@ export default function App() {
        <InputGoal entered={enteredGoal}
        goalhandler={goalInputHandler}/>
         <Button onPress={addGoalHandler}  title="ADD" />
+
       </View>
       <FlatList
         keyExtractor={(item, index) => item.id}
@@ -47,11 +77,14 @@ export default function App() {
         renderItem={(itemData) => (
           <ItemGoal
             title={itemData.item.value}
-            onDelete={removeGoalHandler}
+            onDelete={goalRemoveHandler}
             id={itemData.item.id}
           />
         )}
       />
+
+      
+
 
         <TextInput style={styles.TextInput}
         value={entredGoal}
@@ -59,13 +92,22 @@ export default function App() {
         <Button style={styles.Button} title="ADD" />
       </View>
 
+
     </View>
   );
 }
 
+
+const styles = StyleSheet.create({
+  Screen: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding:100
+=======
 const Styles = StyleSheet.create({
   Screen: {
     padding: 50,
+
   },
   inputContainer: {
     flexDirection: "row",
